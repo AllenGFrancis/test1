@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Simple Page</title>
+    <style>
+        :root {
+            --bg: #f7f7f9;
+            --card: #ffffff;
+            --text: #222;
+            --accent: #2563eb;
+        }
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: var(--bg);
+            color: var(--text);
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            box-shadow: 0 6px 24px rgba(16,24,40,0.08);
+            padding: 1.5rem;
+            max-width: 520px;
+            width: 100%;
+        }
+        h1 { margin: 0 0 .5rem; font-size: 1.25rem; }
+        p { margin: 0 0 1rem; color: #475569; }
+        .row { display:flex; gap: .5rem; }
+        button {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: .5rem .75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        button.secondary {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+        input[type="text"]{
+            flex:1;
+            padding: .5rem .6rem;
+            border-radius: 8px;
+            border: 1px solid #e6edf3;
+            outline: none;
+        }
+        .result {
+            margin-top: 1rem;
+            padding: .75rem;
+            background: #f1f5f9;
+            border-radius: 8px;
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body>
+    <main class="card" id="app">
+        <h1>Simple Interactive Page</h1>
+        <p>Type something and click "Show" to display it below. Use "Clear" to reset.</p>
+
+        <div class="row" style="margin-bottom:.5rem;">
+            <input id="text" type="text" placeholder="Write something..." />
+            <button id="show">Show</button>
+            <button id="clear" class="secondary">Clear</button>
+        </div>
+
+        <div id="output" class="result" aria-live="polite">Nothing yet.</div>
+    </main>
+
+    <script>
+        const input = document.getElementById('text');
+        const out = document.getElementById('output');
+        document.getElementById('show').addEventListener('click', () => {
+            const v = input.value.trim();
+            out.textContent = v ? v : 'You entered an empty value.';
+        });
+        document.getElementById('clear').addEventListener('click', () => {
+            input.value = '';
+            out.textContent = 'Cleared.';
+            input.focus();
+        });
+        // Enter key submits
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') document.getElementById('show').click();
+        });
+    </script>
+</body>
+</html>
